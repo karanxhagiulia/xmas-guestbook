@@ -1,0 +1,110 @@
+body {
+    background-color: #f8f9fa;
+    font-family: Arial, sans-serif;
+}
+
+.body-content {
+    padding-top: 60px; 
+}
+
+.christmas-background {
+    background-color: #800000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+}
+
+.img-background {
+    background-image: url('/public/css/pexels-ifreestock-695971.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fff3e0;
+}
+
+.navbar {
+    background-color: #800000;
+    color: white;
+    padding: 10px 20px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #ffcccb;
+}
+
+.body-content {
+    padding-top: 60px; /* To avoid overlap with fixed navbar */
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Mountains of Christmas', cursive;
+}
+
+p, tr, label {
+    font-family:'Roboto', sans-serif;
+}
+
+
+p {
+    font-size: larger;
+}
+
+/* Snowfall */
+@keyframes snowfall {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
+}
+
+.snowflake {
+    position: fixed;
+    top: -50px;
+    color: #FFF;
+    font-size: 1.2em;
+    user-select: none;
+    animation: snowfall linear infinite;
+    z-index: 999;
+}
+
+/* Varying snowflake positions and speeds */
+.snowflake:nth-child(1) { left: 10%; animation-duration: 10s; }
+.snowflake:nth-child(2) { left: 20%; animation-duration: 12s; }
+.snowflake:nth-child(3) { left: 30%; animation-duration: 8s; }
+.snowflake:nth-child(4) { left: 40%; animation-duration: 10s; }
+.snowflake:nth-child(5) { left: 50%; animation-duration: 15s; }
+.snowflake:nth-child(6) { left: 60%; animation-duration: 7s; }
+.snowflake:nth-child(7) { left: 70%; animation-duration: 12s; }
+.snowflake:nth-child(8) { left: 80%; animation-duration: 9s; }
+.snowflake:nth-child(9) { left: 90%; animation-duration: 11s; }
+.snowflake:nth-child(10) { left: 100%; animation-duration: 14s; }
+
+/* Buttons */
+button, .btn {
+    background-color: #005118;
+    color: #ffcccb;
+    border: none;
+    font-weight: bold;
+}
+
+button:hover, .btn:hover {
+    background-color: #a52a2a;
+    color: #fff;
+}
