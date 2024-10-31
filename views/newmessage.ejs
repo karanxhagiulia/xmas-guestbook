@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas&family=Roboto&display=swap">
-
     <title>New Message</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <!-- Snowflakes -->
     <div class="snowflake">❄️</div>
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
@@ -19,12 +19,15 @@
     <div class="snowflake">❆</div>
     <div class="snowflake">❄️</div>
 
+    <!-- Navbar -->
     <div class="navbar">
         <a href="/">Home</a>
         <a href="/guestbook">Guestbook</a>
         <a href="/newmessage">New Message</a>
         <a href="/ajaxmessage">Ajax Message</a>
-    </div>    
+    </div>  
+
+    <!-- Form for new message -->
     <div class="container christmas-background body-content text-center">
         <h1>Leave a Christmas Message</h1>
         <form action="/newmessage" method="POST">
@@ -37,5 +40,19 @@
             <button type="submit" class="btn btn-danger">Submit</button>
         </form>
     </div>
+
+    <!-- JavaScript validation -->
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const username = document.querySelector('input[name="username"]').value.trim();
+            const country = document.querySelector('input[name="country"]').value.trim();
+            const message = document.querySelector('textarea[name="message"]').value.trim();
+            
+            if (username.length < 3 || country.length < 2 || message.length < 5) {
+                event.preventDefault(); // Stop form from submitting
+                alert('Please ensure all fields are filled out properly.');
+            }
+        });
+    </script>
 </body>
 </html>

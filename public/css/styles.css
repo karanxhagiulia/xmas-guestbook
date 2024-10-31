@@ -1,32 +1,39 @@
+/* Background */
 body {
-    background-color: #f8f9fa;
+    background-image: url('/img/background2.jpg');
+    background-size: cover;
+    background-repeat: repeat-x;
+    background-position: center;
     font-family: Arial, sans-serif;
+    color: #f8f9fa;
 }
 
 .body-content {
-    padding-top: 60px; 
+    padding-top: 60px;
 }
 
+/* Christmas-themed content styling */
 .christmas-background {
     background-color: #800000;
     color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-
 }
 
 .img-background {
     background-image: url('/public/css/pexels-ifreestock-695971.jpg');
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: repeat-x ;
     background-position: center;
 }
 
+/* Table styling */
 table.table-striped tbody tr:nth-of-type(odd) {
     background-color: #fff3e0;
 }
 
+/* Navbar styling */
 .navbar {
     background-color: #800000;
     color: white;
@@ -52,28 +59,23 @@ table.table-striped tbody tr:nth-of-type(odd) {
 }
 
 .body-content {
-    padding-top: 60px; /* To avoid overlap with fixed navbar */
+    padding-top: 60px; /* Avoid overlap with navbar */
 }
 
+/* Typography */
 h1, h2, h3, h4 {
     font-family: 'Mountains of Christmas', cursive;
 }
 
 p, tr, label {
-    font-family:'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
-
 
 p {
     font-size: larger;
 }
 
-/* Snowfall */
-@keyframes snowfall {
-    0% { transform: translateY(0); opacity: 1; }
-    100% { transform: translateY(100vh); opacity: 0; }
-}
-
+/* Snowflake effect */
 .snowflake {
     position: fixed;
     top: -50px;
@@ -82,6 +84,12 @@ p {
     user-select: none;
     animation: snowfall linear infinite;
     z-index: 999;
+}
+
+/* Snowfall animation */
+@keyframes snowfall {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
 }
 
 /* Varying snowflake positions and speeds */

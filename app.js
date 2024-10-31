@@ -12,13 +12,24 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
+// Utility function to load messages safely
+function loadMessages() {
+    try {
+        const data = fs.readFileSync('messages.json', 'utf8');
+        return JSON.parse(data || '[]');
+    } catch (error) {
+        console.error('Error reading messages.json:', error);
+        return [];
+    }
+}
+
 // Routes
 app.get('/', (req, res) => {
     res.render('index');
 });
 
 app.get('/guestbook', (req, res) => {
-    const messages = JSON.parse(fs.readFileSync('messages.json'));
+    const messages = loadMessages();
     res.render('guestbook', { messages });
 });
 
@@ -36,7 +47,7 @@ app.post('/newmessage', (req, res) => {
     if (!username || !country || !message) {
         return res.status(400).send('All fields are required');
     }
-    const messages = JSON.parse(fs.readFileSync('messages.json'));
+    const messages = loadMessages();
     const newMessage = {
         username,
         country,
@@ -44,14 +55,23 @@ app.post('/newmessage', (req, res) => {
         date: new Date().toISOString(),
     };
     messages.push(newMessage);
-    fs.writeFileSync('messages.json', JSON.stringify(messages, null, 2));
-    res.redirect('/guestbook');
+    
+    fs.writeFile('messages.json', JSON.stringify(messages, null, 2), (err) => {
+        if (err) {
+            console.error('Error saving message:', err);
+            return res.status(500).send('Internal Server Error');
+        }
+        res.redirect('/guestbook');
+    });
 });
 
-// AJAX route
+// AJAX route for /ajaxmessage
 app.post('/ajaxmessage', (req, res) => {
     const { username, country, message } = req.body;
-    const messages = JSON.parse(fs.readFileSync('messages.json'));
+    if (!username || !country || !message) {
+        return res.status(400).json({ error: 'All fields are required' });
+    }
+    const messages = loadMessages();
     const newMessage = {
         username,
         country,
@@ -59,8 +79,14 @@ app.post('/ajaxmessage', (req, res) => {
         date: new Date().toISOString(),
     };
     messages.push(newMessage);
-    fs.writeFileSync('messages.json', JSON.stringify(messages, null, 2));
-    res.json(messages); // Sends all messages back as a JSON array
+
+    fs.writeFile('messages.json', JSON.stringify(messages, null, 2), (err) => {
+        if (err) {
+            console.error('Error saving message:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        res.json(messages); // Sends all messages back as a JSON array
+    });
 });
 
 app.listen(PORT, () => {
