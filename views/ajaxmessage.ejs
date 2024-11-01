@@ -8,7 +8,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-    <!-- Snowflakes -->
+    <!-- Snowflakes for the snow effect-->
     <div class="snowflake">❄️</div>
     <div class="snowflake">❅</div>
     <div class="snowflake">❆</div>
@@ -20,7 +20,7 @@
     <div class="snowflake">❆</div>
     <div class="snowflake">❄️</div>
 
-    <!-- Navbar -->
+    <!-- Navbar menu -->
     <div class="navbar">
         <a href="/">Home</a>
         <a href="/guestbook">Guestbook</a>
@@ -45,38 +45,58 @@
         <div id="messageList" class="mt-4"></div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function submitMessage() {
             // Collect data from form fields
-            const username = $('#username').val();
-            const country = $('#country').val();
-            const message = $('#message').val();
+            var username = document.getElementById('username').value;
+            var country = document.getElementById('country').value;
+            var message = document.getElementById('message').value;
 
-            // Send data to server using AJAX POST
-            $.ajax({
-                url: '/ajaxmessage',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ username, country, message }),
-                success: function(data) {
+            // Create an object to hold the data
+            var dataToSend = {
+                username: username,
+                country: country,
+                message: message
+            };
+
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/ajaxmessage', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Set up the callback function for when the request completes
+            xhr.onload = function() {
+                if (xhr.status === 200) {
                     // Clear form fields
-                    $('#username').val('');
-                    $('#country').val('');
-                    $('#message').val('');
+                    document.getElementById('username').value = '';
+                    document.getElementById('country').value = '';
+                    document.getElementById('message').value = '';
 
-                    // Clear and update message list with new data
-                    $('#messageList').empty();
-                    data.forEach(msg => {
-                        $('#messageList').append(
-                            `<p><strong>${msg.username}</strong> from <em>${msg.country}</em>: ${msg.message} on ${new Date(msg.date).toLocaleString()}</p>`
-                        );
-                    });
-                },
-                error: function(err) {
+                    // Clear the current message list
+                    var messageList = document.getElementById('messageList');
+                    messageList.innerHTML = '';
+
+                    // Parse the JSON response
+                    var messages = JSON.parse(xhr.responseText);
+
+                    // Loop through the messages and display them
+                    for (var i = 0; i < messages.length; i++) {
+                        var msg = messages[i];
+                        var newMessage = document.createElement('p');
+                        newMessage.innerHTML = '<strong>' + msg.username + '</strong> from <em>' + msg.country + '</em>: ' +
+                                            msg.message + ' on ' + new Date(msg.date).toLocaleString();
+                        messageList.appendChild(newMessage);
+                    }
+                } else {
                     alert("Error: Could not submit message. Please try again.");
                 }
-            });
+            };
+
+            // Send the request with the data
+            xhr.send(JSON.stringify(dataToSend));
         }
     </script>
+
 </body>
 </html>
