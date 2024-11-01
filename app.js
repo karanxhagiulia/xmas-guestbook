@@ -67,25 +67,30 @@ app.post('/newmessage', (req, res) => {
 
 // AJAX route for /ajaxmessage
 app.post('/ajaxmessage', (req, res) => {
+    //basic validation to ensure all fields are filled
     const { username, country, message } = req.body;
     if (!username || !country || !message) {
         return res.status(400).json({ error: 'All fields are required' });
     }
+    //load the existing messages
     const messages = loadMessages();
+    // Create a new message object with a timestamp
+
     const newMessage = {
         username,
         country,
         message,
         date: new Date().toISOString(),
     };
+    //Add the new message to the array
     messages.push(newMessage);
-
+    //save the updated array back to messages.json
     fs.writeFile('messages.json', JSON.stringify(messages, null, 2), (err) => {
         if (err) {
             console.error('Error saving message:', err);
             return res.status(500).json({ error: 'Internal Server Error' });
         }
-        res.json(messages); // Sends all messages back as a JSON array
+        res.json(messages); //sends all messages back as a JSON array
     });
 });
 
