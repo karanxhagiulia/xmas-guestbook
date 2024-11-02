@@ -1,4 +1,4 @@
-// Imports and the setup, using expressm fs for reading and writing
+// imports and the setup, using expressm fs for reading and writing
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 
-// Using bodyParser for parsing incoming request 
+// using bodyParser for parsing incoming request 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
